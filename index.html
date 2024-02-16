@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Movie Database</title>
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="content-wrapper header__flex">
+            <a href="index.html"><img src="./res/logo.png" alt="logotype"></a>
+            <form>
+                <input id="searchInput" type="text">
+                <button class="header__form-btn" id="searchBtn">Search</button>
+            </form>
+            <button class="header__fav-btn" id="favBtn">Favorites</button>
+        </div>
+    </header>
+
+    <section class="favorites-container d-none" id="favoritesContainer">
+        <div class="content-wrapper favorites" id="favorites">
+
+        </div>
+    </section>
+
+    <!-- Search Results d-none -->
+    <section class="d-none">
+        <div class="content-wrapper results">
+            <h2 class="results__title">Search Results</h2>
+            <ul class="results__list" id="resultsList">
+            </ul>
+        </div>
+    </section>
+
+    <!-- Trailer Section -->
+    <section>
+        <div class="content-wrapper">
+            <article class="carousel" data-carousel>
+                <button class="carousel__btn prev" data-carousel-btn="prev">&#8612;</button>
+                <button class="carousel__btn next" data-carousel-btn="next">&#8614;</button>
+                <ul data-slides>
+                    <li class="carousel__slide" data-active>
+                        <iframe src="https://www.youtube.com/embed/uYPbbksJxIg" width="420" height="315"
+                            frameborder="0"></iframe>
+                    </li>
+                    <li class="carousel__slide">
+                        <iframe src="https://www.youtube.com/embed/y2rYRu8UW8M" width="420" height="315"
+                            frameborder="0"></iframe>
+                    </li>
+                    <li class="carousel__slide">
+                        <iframe src="https://www.youtube.com/embed/L-_xHEv0l-w" width="420" height="315"
+                            frameborder="0"></iframe>
+                    </li>
+                    <li class="carousel__slide">
+                        <iframe src="https://www.youtube.com/embed/eHcZlPpNt0Q" width="420" height="315"
+                            frameborder="0"></iframe>
+                    </li>
+                    <li class="carousel__slide">
+                        <iframe src="https://www.youtube.com/embed/5xH0HfJHsaY" width="420" height="315"
+                            frameborder="0"></iframe>
+                    </li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
+    <!-- Popular movies section -->
+    <section>
+        <div class="content-wrapper popular">
+            <h2 class="popular__title">My Movie Database Top 20</h2>
+            <section class="popular__card-container" id="popularCardContainer">
+
+
+            </section>
+        </div>
+    </section>
+
+    <script src="./scripts/script.js"></script>
+</body>
+
+</html>
