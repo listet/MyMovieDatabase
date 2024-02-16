@@ -1,4 +1,3 @@
-![logo](/Template/res/logo.png)
 
 # Individuellt examensarbete - MyMovieDatabase
 
