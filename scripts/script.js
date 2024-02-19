@@ -25,11 +25,15 @@ async function setupCarousel() {
                 newIndex = 0;
             }
             // Fetch 5 random movies from the API
-            const movies = await fetchMovies('https://santosnr6.github.io/Data/movies.json');
-            console.log(movies)
-            const iframes = document.querySelectorAll('iframe');
-            for (let index = 0; index < iframes.length; index++) {
-                iframes[index].src = movies.splice(Math.floor(Math.random() * movies.length), 1)[0].trailer_link;
+            try {
+                const movies = await fetchMovies('https://santosnr6.github.io/Data/movies.json');
+                console.log(movies)
+                const iframes = document.querySelectorAll('iframe');
+                for (let index = 0; index < iframes.length; index++) {
+                    iframes[index].src = movies.splice(Math.floor(Math.random() * movies.length), 1)[0].trailer_link;
+                }
+            } catch (error) {
+                console.error('Error fetching movies', error);
             }
 
             // Lägger till active/tar bort active
@@ -77,3 +81,60 @@ async function top20() {
         console.error('Error fetching movies', error);
     }
 }
+
+
+//Fixa API!
+async function renderMovies() {
+    const apiUrl = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&s`);
+    console.log(apiUrl)
+
+    try {
+        const searchInput = document.querySelector('#searchInput').value;
+        //const apiUrl = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&s=${searchInput}`);
+        // Check if the response is successful
+        if (searchInput === apiUrl) {
+            const movies = apiUrl.Search;
+            renderMoviesList(movies);
+        } else {
+            console.error('Error in API response:', error);
+        }
+    } catch (error) {
+        console.error('Error fetching movies from OMDB API:', error);
+    }
+}
+
+function renderMoviesList(movies) {
+    const mainRef = document.querySelector('#resultsList');
+    mainRef.innerHTML = ''; // Clear previous search results
+
+    if (movies && movies.length > 0) {
+        console.log(movies)
+        movies.forEach(movie => {
+            const container = document.createElement('div'); // Create a container for each movie
+            container.classList.add('resultMovieContainer'); // Add a class to the container
+
+            const titleRef = document.createElement('p');
+            titleRef.classList.add('resultMovieTitle')
+            titleRef.textContent = movie.Title;
+
+            const imgRef = document.createElement('img');
+            imgRef.classList.add('resultMoviePoster')
+            imgRef.src = movie.Poster;
+            imgRef.alt = movie.Title;
+
+            container.appendChild(titleRef);
+            container.appendChild(imgRef);
+            mainRef.appendChild(container);
+        });
+    } else {
+        const pRef = document.createElement('p');
+        pRef.textContent = 'No movies found';
+        mainRef.appendChild(pRef);
+    }
+}
+
+// Kallar på renderMovies() när man trycker på search-knappen
+document.querySelector('#searchBtn').addEventListener('click', event => {
+    event.preventDefault();
+    renderMovies();
+});

@@ -178,6 +178,15 @@ body {
     flex-grow: 1;
 }
 
+.resultMovieTitle {
+    color: white;
+    font-size: large;
+}
+
+.resultMoviePoster {
+    height: 20px;
+    width: 10px;
+}
 
 
 
@@ -194,7 +203,7 @@ body {
     }
 
     .movie-container {
-        width: 45%;
+        width: 35%;
     }
 }
 
@@ -211,6 +220,6 @@ body {
     }
 
     .movie-container {
-        width: 60%;
+        width: 50%;
     }
 }
