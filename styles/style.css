@@ -194,12 +194,13 @@ body {
 .resultMovieContainer {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-around; */
     padding: 1rem;
     border-radius: 5px;
     background-color: var(--primary-grey);
     margin: 1rem;
     width: 13rem;
+    height: 25rem;
     text-align: center;
     cursor: pointer;
 }
@@ -210,15 +211,20 @@ body {
     margin-bottom: 0.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    /* white-space: nowrap; */
 }
 
 .resultMoviePoster {
     max-width: 100%;
+    max-height: 100%;
+    width: auto;
     height: auto;
-    flex-grow: 1;
+    object-fit: contain;
 }
 
+.showMovieInfo {
+    width: 300px;
+}
 
 
 /* Media Queries */
@@ -240,7 +246,21 @@ body {
 
 @media screen and (max-width: 750px) {
     .content-wrapper {
-        width: 500px;
+        width: 400px;
+    }
+
+    .header__flex {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header form {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 1rem;
     }
 
     .popular__card-container {
@@ -252,5 +272,10 @@ body {
 
     .movie-container {
         width: 50%;
+    }
+
+    .results__list {
+        display: flex;
+        flex-direction: column;
     }
 }

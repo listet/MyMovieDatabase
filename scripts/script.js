@@ -96,7 +96,7 @@ async function renderMovies() {
 
 function renderMoviesList(movies) {
     const mainRef = document.querySelector('#resultsList');
-    mainRef.innerHTML = ''; // Clear previous search results
+    mainRef.innerHTML = ''; // Tar bort tidigare sökresultat
     const results__wrapper = document.querySelector('#results__wrapper');
     results__wrapper.classList.remove('d-none');
 
@@ -112,12 +112,19 @@ function renderMoviesList(movies) {
 
             const imgRef = document.createElement('img');
             imgRef.classList.add('resultMoviePoster')
-            imgRef.src = movie.Poster;
-            imgRef.alt = movie.Title;
+
+            if (movie.Poster !== 'N/A') {
+                imgRef.src = movie.Poster;
+                imgRef.alt = movie.Title;
+            } else {
+                imgRef.src = './res/icon-image-not-found-free-vector.jpg';
+                imgRef.alt = 'no picture available';
+            }
 
             container.appendChild(titleRef);
             container.appendChild(imgRef);
             mainRef.appendChild(container);
+            resultsButtonMovie()
         });
     } else {
         const pRef = document.createElement('p');
@@ -125,10 +132,59 @@ function renderMoviesList(movies) {
         mainRef.appendChild(pRef);
     }
 }
-//Lägg till if-sats som lägger in bild - picture not found?
 
 // Kallar på renderMovies() när man trycker på search-knappen
 document.querySelector('#searchBtn').addEventListener('click', event => {
     event.preventDefault();
     renderMovies();
 });
+
+//Ändra API´n så den funkar. Index på något vis?//hämta inte på title, hämta på ID
+async function resultsButtonMovie() {
+    const movieContainers = document.querySelectorAll('.resultMovieContainer');
+
+    movieContainers.forEach(container => {
+        container.addEventListener('click', async () => {
+            const imdbID = container.dataset.imdbid;
+            try {
+                const movieDetails = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&i=${imdbID}`); // Fetch movie details using IMDb ID
+                displayMovieDetails(container, movieDetails);
+            } catch (error) {
+                console.error('Error fetching movie details', error);
+            }
+        });
+    });
+}
+
+function displayMovieDetails(container, movieDetails) {
+    // Assuming you have elements inside the container to display the movie details
+    // You can update this part based on your HTML structure
+    const infoContainer = document.createElement('div');
+    infoContainer.classList.add('movie-details');
+
+    // Example: Display movie title
+    const titleElement = document.createElement('h2');
+    titleElement.textContent = movieDetails.Title;
+    infoContainer.appendChild(titleElement);
+
+    // Example: Display movie plot
+    const plotElement = document.createElement('p');
+    plotElement.textContent = movieDetails.Plot;
+    infoContainer.appendChild(plotElement);
+
+    // Example: Display movie rating
+    const ratingElement = document.createElement('p');
+    ratingElement.textContent = `Rating: ${movieDetails.imdbRating}`;
+    infoContainer.appendChild(ratingElement);
+
+    // Example: Display other movie details as needed
+
+    // Clear any existing movie details
+    const existingInfoContainer = container.querySelector('.movie-details');
+    if (existingInfoContainer) {
+        container.removeChild(existingInfoContainer);
+    }
+
+    // Append the new movie details
+    container.appendChild(infoContainer);
+}
