@@ -178,14 +178,45 @@ body {
     flex-grow: 1;
 }
 
+.results__title {
+    color: white;
+    text-align: center;
+    margin: 2rem;
+}
+
+.results__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.resultMovieContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: var(--primary-grey);
+    margin: 1rem;
+    width: 13rem;
+    text-align: center;
+    cursor: pointer;
+}
+
 .resultMovieTitle {
     color: white;
-    font-size: large;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .resultMoviePoster {
-    height: 20px;
-    width: 10px;
+    max-width: 100%;
+    height: auto;
+    flex-grow: 1;
 }
 
 

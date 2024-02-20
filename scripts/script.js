@@ -43,7 +43,7 @@ async function setupCarousel() {
     });
 }
 
-// Function to fetch 5 random movies from the API
+// Function to fetch movies from the API
 async function fetchMovies(url) {
     const response = await fetch(url);
     const data = await response.json();
@@ -82,22 +82,13 @@ async function top20() {
     }
 }
 
-
-//Fixa API!
 async function renderMovies() {
-    const apiUrl = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&s`);
-    console.log(apiUrl)
 
     try {
         const searchInput = document.querySelector('#searchInput').value;
-        //const apiUrl = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&s=${searchInput}`);
-        // Check if the response is successful
-        if (searchInput === apiUrl) {
-            const movies = apiUrl.Search;
-            renderMoviesList(movies);
-        } else {
-            console.error('Error in API response:', error);
-        }
+        const apiUrl = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&s=${searchInput}`);
+        console.log(apiUrl)
+        renderMoviesList(apiUrl.Search);
     } catch (error) {
         console.error('Error fetching movies from OMDB API:', error);
     }
@@ -106,10 +97,12 @@ async function renderMovies() {
 function renderMoviesList(movies) {
     const mainRef = document.querySelector('#resultsList');
     mainRef.innerHTML = ''; // Clear previous search results
+    const results__wrapper = document.querySelector('#results__wrapper');
+    results__wrapper.classList.remove('d-none');
 
     if (movies && movies.length > 0) {
-        console.log(movies)
         movies.forEach(movie => {
+            console.log(movie)
             const container = document.createElement('div'); // Create a container for each movie
             container.classList.add('resultMovieContainer'); // Add a class to the container
 
@@ -132,6 +125,7 @@ function renderMoviesList(movies) {
         mainRef.appendChild(pRef);
     }
 }
+//Lägg till if-sats som lägger in bild - picture not found?
 
 // Kallar på renderMovies() när man trycker på search-knappen
 document.querySelector('#searchBtn').addEventListener('click', event => {
