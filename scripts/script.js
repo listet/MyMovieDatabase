@@ -110,6 +110,8 @@ function renderMoviesList(movies) {
             titleRef.classList.add('resultMovieTitle')
             titleRef.textContent = movie.Title;
 
+            container.setAttribute('data-id', movie.imdbID);
+
             const imgRef = document.createElement('img');
             imgRef.classList.add('resultMoviePoster')
 
@@ -120,11 +122,16 @@ function renderMoviesList(movies) {
                 imgRef.src = './res/icon-image-not-found-free-vector.jpg';
                 imgRef.alt = 'no picture available';
             }
+            container.addEventListener('click', async event => {
+                const movieID = event.currentTarget.getAttribute('data-id')
+                const movieDetails = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&plot=full&i=${movieID}`);
+                console.log(movieDetails)
+            })
 
             container.appendChild(titleRef);
             container.appendChild(imgRef);
             mainRef.appendChild(container);
-            resultsButtonMovie()
+            // resultsButtonMovie()
         });
     } else {
         const pRef = document.createElement('p');
@@ -144,11 +151,14 @@ async function resultsButtonMovie() {
     const movieContainers = document.querySelectorAll('.resultMovieContainer');
 
     movieContainers.forEach(container => {
-        container.addEventListener('click', async () => {
-            const imdbID = container.dataset.imdbid;
+        container.addEventListener('click', async (event) => {
             try {
-                const movieDetails = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&i=${imdbID}`); // Fetch movie details using IMDb ID
-                displayMovieDetails(container, movieDetails);
+                console.log(event.currentTarget)
+                // console.log(container)
+                //     const imdbID = container.dataset.imdbid;
+                //     console.log(imdbID)
+                //     const movieDetails = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&plot=full&i=${imdbID}`); // Fetch movie details using IMDb ID
+                //     displayMovieDetails(movieDetails);
             } catch (error) {
                 console.error('Error fetching movie details', error);
             }
@@ -159,32 +169,10 @@ async function resultsButtonMovie() {
 function displayMovieDetails(container, movieDetails) {
     // Assuming you have elements inside the container to display the movie details
     // You can update this part based on your HTML structure
-    const infoContainer = document.createElement('div');
-    infoContainer.classList.add('movie-details');
-
-    // Example: Display movie title
-    const titleElement = document.createElement('h2');
-    titleElement.textContent = movieDetails.Title;
-    infoContainer.appendChild(titleElement);
-
-    // Example: Display movie plot
-    const plotElement = document.createElement('p');
-    plotElement.textContent = movieDetails.Plot;
-    infoContainer.appendChild(plotElement);
-
-    // Example: Display movie rating
-    const ratingElement = document.createElement('p');
-    ratingElement.textContent = `Rating: ${movieDetails.imdbRating}`;
-    infoContainer.appendChild(ratingElement);
-
-    // Example: Display other movie details as needed
-
-    // Clear any existing movie details
-    const existingInfoContainer = container.querySelector('.movie-details');
-    if (existingInfoContainer) {
-        container.removeChild(existingInfoContainer);
-    }
+    const infoContainer = document.querySelector('div');
+    infoContainer.classList.add('showMovieInfo');
 
     // Append the new movie details
+    infoContainer.textContent = JSON.stringify(movieDetails);
     container.appendChild(infoContainer);
 }
