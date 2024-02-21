@@ -222,9 +222,15 @@ body {
     object-fit: contain;
 }
 
+
 .showMovieInfo {
-    width: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: #5595E7;
 }
+
+
 
 
 /* Media Queries */

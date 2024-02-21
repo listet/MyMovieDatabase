@@ -126,12 +126,12 @@ function renderMoviesList(movies) {
                 const movieID = event.currentTarget.getAttribute('data-id')
                 const movieDetails = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&plot=full&i=${movieID}`);
                 console.log(movieDetails)
+                container.classList.toggle('showMovieInfo')
             })
 
             container.appendChild(titleRef);
             container.appendChild(imgRef);
             mainRef.appendChild(container);
-            // resultsButtonMovie()
         });
     } else {
         const pRef = document.createElement('p');
@@ -145,34 +145,3 @@ document.querySelector('#searchBtn').addEventListener('click', event => {
     event.preventDefault();
     renderMovies();
 });
-
-//Ändra API´n så den funkar. Index på något vis?//hämta inte på title, hämta på ID
-async function resultsButtonMovie() {
-    const movieContainers = document.querySelectorAll('.resultMovieContainer');
-
-    movieContainers.forEach(container => {
-        container.addEventListener('click', async (event) => {
-            try {
-                console.log(event.currentTarget)
-                // console.log(container)
-                //     const imdbID = container.dataset.imdbid;
-                //     console.log(imdbID)
-                //     const movieDetails = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&plot=full&i=${imdbID}`); // Fetch movie details using IMDb ID
-                //     displayMovieDetails(movieDetails);
-            } catch (error) {
-                console.error('Error fetching movie details', error);
-            }
-        });
-    });
-}
-
-function displayMovieDetails(container, movieDetails) {
-    // Assuming you have elements inside the container to display the movie details
-    // You can update this part based on your HTML structure
-    const infoContainer = document.querySelector('div');
-    infoContainer.classList.add('showMovieInfo');
-
-    // Append the new movie details
-    infoContainer.textContent = JSON.stringify(movieDetails);
-    container.appendChild(infoContainer);
-}
