@@ -100,11 +100,12 @@ function renderMoviesList(movies) {
     const results__wrapper = document.querySelector('#results__wrapper');
     results__wrapper.classList.remove('d-none');
 
+    let plotRef;
+
     if (movies && movies.length > 0) {
         movies.forEach(movie => {
-            console.log(movie)
-            const container = document.createElement('div'); // Create a container for each movie
-            container.classList.add('resultMovieContainer'); // Add a class to the container
+            const container = document.createElement('div');
+            container.classList.add('resultMovieContainer');
 
             const titleRef = document.createElement('p');
             titleRef.classList.add('resultMovieTitle')
@@ -122,20 +123,34 @@ function renderMoviesList(movies) {
                 imgRef.src = './res/icon-image-not-found-free-vector.jpg';
                 imgRef.alt = 'no picture available';
             }
-            container.addEventListener('click', async event => {
-                const movieID = event.currentTarget.getAttribute('data-id')
-                const movieDetails = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&plot=full&i=${movieID}`);
-                console.log(movieDetails)
-                container.classList.toggle('showMovieInfo')
-            })
 
             container.appendChild(titleRef);
             container.appendChild(imgRef);
             mainRef.appendChild(container);
+
+            container.addEventListener('click', async event => {
+                const movieID = event.currentTarget.getAttribute('data-id')
+                const movieDetails = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&plot=full&i=${movieID}`);
+                console.log(movieDetails)
+                container.classList.toggle('showMovieInfo');
+
+                const existingPlot = container.querySelector('.resultMoviePlot');
+                if (existingPlot) {
+                    existingPlot.remove();
+                }
+
+                if (container.classList.contains('showMovieInfo')) {
+                    const plotRef = document.createElement('p');
+                    plotRef.classList.add('resultMoviePlot');
+                    plotRef.textContent = movieDetails.Plot;
+                    container.appendChild(plotRef);
+                }
+            });
         });
     } else {
         const pRef = document.createElement('p');
         pRef.textContent = 'No movies found';
+        pRef.classList.add('errorText')
         mainRef.appendChild(pRef);
     }
 }
