@@ -37,6 +37,8 @@ body {
     width: 100%;
     padding: 1.5rem;
     z-index: 999;
+    position: sticky;
+    top: 0px;
 }
 
 .header__flex {
@@ -48,6 +50,11 @@ body {
 .header img {
     width: 150px;
     background-color: yellow;
+}
+
+.header__logo {
+    max-width: 10rem;
+    margin-top: 0.5rem;
 }
 
 .header form {
@@ -192,6 +199,7 @@ body {
 }
 
 .resultMovieContainer {
+    transition: 0.1s;
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -212,7 +220,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     grid-area: title;
-    /* white-space: nowrap; */
+    white-space: nowrap;
 }
 
 .resultMoviePoster {
@@ -225,13 +233,14 @@ body {
 }
 
 .showMovieInfo {
+    transition: 0.1s;
     width: 100%;
     object-fit: contain;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 1rem;
+    grid-gap: 2rem;
     grid-template-areas:
-        "title . ."
+        "title . heart"
         "img plot plot"
         "img plot plot";
     height: auto;
@@ -240,17 +249,31 @@ body {
 
 .showMovieInfo img {
     height: 20rem;
+    margin-left: 2.5rem;
+    margin-bottom: 2rem;
 }
 
 .resultMoviePlot {
-    margin-top: 3rem;
+    margin-top: 1rem;
     padding: 0.5rem;
     margin-left: 1rem;
+    margin-right: 1rem;
     grid-area: plot;
 }
 
 .errorText {
     color: red;
+}
+
+.favorite-icon {
+    margin-top: 1rem;
+    color: white;
+    grid-area: heart;
+    z-index: 2;
+}
+
+.favorite-icon--yellow {
+    color: #F5C518;
 }
 
 /* Media Queries */
@@ -312,6 +335,13 @@ body {
     .showMovieInfo {
         display: flex;
         flex-direction: column;
+        justify-content: space-around;
         align-items: center;
     }
+
+    .showMovieInfo img {
+        margin-left: 0;
+        margin-bottom: 0;
+    }
+
 }

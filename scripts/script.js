@@ -124,8 +124,19 @@ function renderMoviesList(movies) {
                 imgRef.alt = 'no picture available';
             }
 
+            //skapar hjärticonen för favoriter
+            const heartIcon = document.createElement('span');
+            heartIcon.classList.add('favorite-icon');
+            heartIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
+
+            // Lägg till en klickhändelse för hjärtikonen
+            heartIcon.addEventListener('click', () => {
+                handleFavoriteIconClick(movie.imdbID);
+            });
+
             container.appendChild(titleRef);
             container.appendChild(imgRef);
+            container.appendChild(heartIcon);
             mainRef.appendChild(container);
 
             container.addEventListener('click', async event => {
@@ -150,7 +161,7 @@ function renderMoviesList(movies) {
     } else {
         const pRef = document.createElement('p');
         pRef.textContent = 'No movies found';
-        pRef.classList.add('errorText')
+        pRef.classList.add('errorText');
         mainRef.appendChild(pRef);
     }
 }
@@ -160,3 +171,92 @@ document.querySelector('#searchBtn').addEventListener('click', event => {
     event.preventDefault();
     renderMovies();
 });
+
+//Favoriets
+
+// // Funktion för att hantera klick på favorit-knappen och lägga till/ta bort film från favoritlistan
+function handleFavoriteIconClick(imdbID) {
+    console.log('favoriter!');
+    const isFavorite = JSON.parse(localStorage.getItem('favorites') || '[]').some(movie => movie.imdbID === movieId);
+    const heartIcon = document.querySelector(`[data-id="${imdbID}"] .favorite-icon`);
+
+    if (isFavorite) {
+        removeFromFavorites(imdbID);
+        heartIcon.classList.remove('favorite-icon--yellow');
+    } else {
+        const movie = JSON.parse(localStorage.getItem('movies')).find(movie => movie.imdbID === movieId);
+        addToFavorites(imdbID);
+        heartIcon.classList.add('favorite-icon--yellow');
+    }
+
+    displayFavorites(); // Uppdatera visningen av favoritlistan
+}
+
+// // // Funktion för att hantera klick på favorit-knappen och lägga till/ta bort film från favoritlistan
+// document.querySelectorAll('.favorite-icon').forEach(icon => {
+//     icon.addEventListener('click', () => {
+//         const movieId = icon.parentElement.dataset.id;
+//         handleFavoriteIconClick(movieId);
+//     });
+// });
+
+
+
+// // Funktion för att lägga till en film i favoritlistan
+function addToFavorites(movie) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    favorites.push(movie);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
+// // Funktion för att ta bort en film från favoritlistan
+function removeFromFavorites(movieId) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    favorites = favorites.filter(movie => movie.imdbID !== movieId);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
+// // Funktion för att visa favoritlistan på HTML-sidan
+function displayFavorites() {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const favoritesContainer = document.querySelector('#favoritesContainer');
+    favoritesContainer.innerHTML = ''; // Rensa container
+
+    favorites.forEach(movie => {
+        const container = document.createElement('div');
+        container.classList.add('resultMovieContainer');
+
+        const titleRef = document.createElement('p');
+        titleRef.classList.add('resultMovieTitle')
+        titleRef.textContent = movie.Title;
+
+        container.setAttribute('data-id', movie.imdbID);
+
+        const imgRef = document.createElement('img');
+        imgRef.classList.add('resultMoviePoster')
+
+        if (movie.Poster !== 'N/A') {
+            imgRef.src = movie.Poster;
+            imgRef.alt = movie.Title;
+        } else {
+            imgRef.src = './res/icon-image-not-found-free-vector.jpg';
+            imgRef.alt = 'no picture available';
+        }
+
+        // Create heart icon for favorites
+        const heartIcon = document.createElement('span');
+        heartIcon.classList.add('favorite-icon');
+        heartIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
+
+        // Add click event for the heart icon
+        heartIcon.addEventListener('click', () => {
+            handleFavoriteIconClick(movie.imdbID);
+        });
+
+        container.appendChild(titleRef);
+        container.appendChild(imgRef);
+        container.appendChild(heartIcon);
+        favoritesContainer.appendChild(container);
+    });
+}
+
