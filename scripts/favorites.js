@@ -2,14 +2,6 @@
 
 import fetchMovies from './fetchMovies.js';
 
-// window.addEventListener('load', () => {
-//     console.log('load');
-//     //Förslagsvis anropar ni era funktioner som skall sätta lyssnare, rendera objekt osv. härifrån
-//     // displayFavorites()
-// });
-
-// //Favoriets
-
 // // Funktion för att hantera klick på favorit-knappen och lägga till/ta bort film från favoritlistan
 function handleFavoriteIconClick(imdbID) {
     console.log('favoriter!');
