@@ -240,7 +240,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 2rem;
     grid-template-areas:
-        "title . heart"
+        "title title heart"
         "img plot plot"
         "img plot plot";
     height: auto;
@@ -273,7 +273,15 @@ body {
 }
 
 .favorite-icon--yellow {
+    margin-top: 1rem;
     color: #F5C518;
+}
+
+.favorites-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Media Queries */
