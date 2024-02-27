@@ -12,7 +12,6 @@ function handleFavoriteIconClick(imdbID) {
     } else {
         addToFavorites(imdbID);
     }
-    // displayFavorites(); // Uppdatera visningen av favoritlistan
 }
 
 // // Funktion för att lägga till en film i favoritlistan i local storage
@@ -44,13 +43,13 @@ async function displayFavorites() {
     console.log('fav', favoritesContainer)
     favoritesContainer.innerHTML = ''; // Rensa container
 
-    // Iterate over each IMDb ID in the favorites list
+    // för varje ID i favoritlistan: 
     for (const imdbID of favorites) {
         try {
-            // Fetch movie details from the API
+            // Hämta information från API
             const movie = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&i=${imdbID}`);
             console.log(movie)
-            // Create elements to display movie title and poster
+            // Skapa element för att visa titel (och bild)
             const container = document.createElement('div');
             container.classList.add('resultMovieContainer');
 
@@ -58,6 +57,7 @@ async function displayFavorites() {
             titleRef.classList.add('resultMovieTitle');
             titleRef.textContent = movie.Title;
 
+            //Sätter värdet på ett anpassat dataattribut med namnet "data-id" på elementet container. 
             container.setAttribute('data-id', imdbID);
 
             const imgRef = document.createElement('img');
@@ -65,12 +65,12 @@ async function displayFavorites() {
             imgRef.src = movie.Poster === 'N/A' ? './res/icon-image-not-found-free-vector.jpg' : movie.Poster;
             imgRef.alt = movie.Title;
 
-            // Create heart icon for favorites
+            // Skapar gula hjärticoner för favoriterna
             const heartIcon = document.createElement('span');
             heartIcon.classList.add('favorite-icon--yellow');
             heartIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
 
-            // Add click event for the heart icon
+            // Lägger till lyssnare på hjärticonerna (tar bort från listan samt uppdaterar sidan)
             heartIcon.addEventListener('click', () => {
                 handleFavoriteIconClick(imdbID);
                 displayFavorites()

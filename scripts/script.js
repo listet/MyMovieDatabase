@@ -56,8 +56,7 @@ async function setupCarousel() {
     });
 }
 
-
-//top20 functionen
+//top20 funktionen
 async function top20() {
     try {
         const movies = await fetchMovies('https://santosnr6.github.io/Data/movies.json');
@@ -168,7 +167,7 @@ function renderMoviesList(movies) {
                 const clickedContainer = event.currentTarget; // Get the clicked container
                 removeActiveClass(clickedContainer);
 
-                //Om target = hjärta aktveras handleFavoriteIconClick(movie.imdbID)
+                //Om target = hjärta så aktiveras - handleFavoriteIconClick(movie.imdbID)
                 //annars kommer class "showMovieInfo" med plot
                 if (event.target.tagName === 'svg') {
                     handleFavoriteIconClick(movie.imdbID);
