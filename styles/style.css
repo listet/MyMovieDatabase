@@ -90,7 +90,7 @@ body {
 .carousel {
     margin: auto;
     margin-top: 2rem;
-    width: 70%;
+    width: 80%;
     aspect-ratio: 3/2;
     position: relative;
     background-color: var(--primary-grey);
@@ -101,7 +101,7 @@ body {
 .carousel__slide {
     position: absolute;
     margin: auto;
-    width: 80%;
+    width: 75%;
     inset: 0;
     visibility: hidden;
     aspect-ratio: 3/2;
@@ -233,7 +233,6 @@ body {
 }
 
 .showMovieInfo {
-    transition: 0.1s;
     width: 100%;
     object-fit: contain;
     display: grid;
@@ -338,6 +337,11 @@ body {
     .results__list {
         display: flex;
         flex-direction: column;
+    }
+
+    .resultMovieContainer {
+        width: 70%;
+        height: auto;
     }
 
     .resultMoviePlot {
