@@ -241,7 +241,7 @@ body {
     grid-template-areas:
         "title title heart"
         "img plot plot"
-        "img plot plot";
+        "img director actors";
     height: auto;
     color: rgb(230, 230, 230);
 }
@@ -286,7 +286,7 @@ body {
 /* Media Queries */
 @media screen and (max-width: 1380px) {
     .content-wrapper {
-        width: 1050px;
+        width: 1000px;
     }
 }
 
@@ -302,7 +302,7 @@ body {
 
 @media screen and (max-width: 750px) {
     .content-wrapper {
-        width: 400px;
+        width: 300px;
     }
 
     .header__flex {
@@ -340,7 +340,7 @@ body {
     }
 
     .resultMovieContainer {
-        width: 70%;
+        width: 80%;
         height: auto;
     }
 
@@ -353,11 +353,15 @@ body {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
     }
 
     .showMovieInfo img {
         margin-left: 0;
         margin-bottom: 0;
     }
-
 }

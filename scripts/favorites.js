@@ -4,7 +4,6 @@ import fetchMovies from './fetchMovies.js';
 
 // // Funktion för att hantera klick på favorit-knappen och lägga till/ta bort film från favoritlistan
 function handleFavoriteIconClick(imdbID) {
-    console.log('favoriter!');
     const isFavorite = JSON.parse(localStorage.getItem('favorites') || '[]').some(movie => movie === imdbID);
 
     if (isFavorite) {
@@ -18,22 +17,18 @@ function handleFavoriteIconClick(imdbID) {
 function addToFavorites(imdbID) {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     const heartIcon = document.querySelector(`[data-id="${imdbID}"] .favorite-icon`);
-    console.log('heart', heartIcon)
     favorites.push(imdbID);
     localStorage.setItem('favorites', JSON.stringify(favorites));
     heartIcon.classList.add('favorite-icon--yellow');
-    console.log('lägg till')
 }
 
 // // Funktion för att ta bort en film från favoritlistan i local storage
 function removeFromFavorites(imdbID) {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     const heartIcon = document.querySelector(`[data-id="${imdbID}"] .favorite-icon--yellow`);
-    console.log('heart', heartIcon)
     favorites = favorites.filter(movie => movie !== imdbID);
     localStorage.setItem('favorites', JSON.stringify(favorites));
     heartIcon.classList.remove('favorite-icon--yellow');
-    console.log('ta bort')
 }
 
 // // Funktion för att visa favoritlistan på HTML-sidan
@@ -48,7 +43,6 @@ async function displayFavorites() {
         try {
             // Hämta information från API
             const movie = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&i=${imdbID}`);
-            console.log(movie)
             // Skapa element för att visa titel (och bild)
             const container = document.createElement('div');
             container.classList.add('resultMovieContainer');

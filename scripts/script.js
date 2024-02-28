@@ -183,6 +183,7 @@ function renderMoviesList(movies) {
                         const plotRef = document.createElement('p');
                         plotRef.classList.add('resultMoviePlot');
                         plotRef.textContent = movieDetails.Plot;
+
                         container.appendChild(plotRef);
                     }
 
