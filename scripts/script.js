@@ -173,22 +173,26 @@ function renderMoviesList(movies) {
                     handleFavoriteIconClick(movie.imdbID);
                 } else {
                     const movieID = event.currentTarget.getAttribute('data-id');
-                    const movieDetails = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&plot=full&i=${movieID}`);
-                    const existingPlots = document.querySelectorAll('.resultMoviePlot');
-                    existingPlots.forEach(plot => {
-                        plot.remove(); // Tar bort plot för alla andra resultat
-                    });
+                    try {
+                        const movieDetails = await fetchMovies(`http://www.omdbapi.com/?apikey=16ca3eb4&plot=full&i=${movieID}`);
+                        const existingPlots = document.querySelectorAll('.resultMoviePlot');
+                        existingPlots.forEach(plot => {
+                            plot.remove(); // Tar bort plot för alla andra resultat
+                        });
 
-                    if (!container.classList.contains('showMovieInfo')) {
-                        const plotRef = document.createElement('p');
-                        plotRef.classList.add('resultMoviePlot');
-                        plotRef.textContent = movieDetails.Plot;
+                        if (!container.classList.contains('showMovieInfo')) {
+                            const plotRef = document.createElement('p');
+                            plotRef.classList.add('resultMoviePlot');
+                            plotRef.textContent = movieDetails.Plot;
 
-                        container.appendChild(plotRef);
+                            container.appendChild(plotRef);
+                        }
+
+                        // Togglar "showMovieInfo" class
+                        container.classList.toggle('showMovieInfo');
+                    } catch (error) {
+                        console.error('Error fetching movie details:', error);
                     }
-
-                    // Togglar "showMovieInfo" class
-                    container.classList.toggle('showMovieInfo');
                 }
             });
         });

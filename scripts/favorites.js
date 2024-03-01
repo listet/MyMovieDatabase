@@ -35,7 +35,6 @@ function removeFromFavorites(imdbID) {
 async function displayFavorites() {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     const favoritesContainer = document.querySelector('#favoritesContainer');
-    console.log('fav', favoritesContainer)
     favoritesContainer.innerHTML = ''; // Rensa container
 
     // för varje ID i favoritlistan: 
@@ -69,7 +68,6 @@ async function displayFavorites() {
                 handleFavoriteIconClick(imdbID);
                 displayFavorites()
             });
-
             container.appendChild(titleRef);
             container.appendChild(imgRef);
             container.appendChild(heartIcon);
